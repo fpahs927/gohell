@@ -8,7 +8,7 @@ import lombok.Getter;
 public class CheckEmailContainsDTO {
     String email;
 
-    public CheckEmailContainsDTO(String email, EntityManager em) {
+    public CheckEmailContainsDTO(String email) {
         this.email = email;
     //    this.checkEmailDuplicate(em);
     }
