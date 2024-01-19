@@ -18,7 +18,7 @@ public class MyGameData extends AbstractEntity {
 
     private long amount;
     private String unitType; //돈 "won"인지 뭔지
-
+    private String memo;
 
     @ManyToOne
     @JoinColumn(name = "user_id_of_mygamedata")

@@ -15,7 +15,13 @@ public class Notification  extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long notificationId;
 
-
+    private String notificationTarget;
+    private LocalDateTime registedNotificationDate;
+    private String notificationMessageType;
+    private String notificationMessageDetails;
+    private String notificationAction;
+    private String registerName;
+    private String registerCause;
 
     @ManyToOne
     @JoinColumn(name = "user_id_of_notification")

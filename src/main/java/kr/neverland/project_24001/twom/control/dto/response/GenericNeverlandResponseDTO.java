@@ -37,6 +37,10 @@ public class GenericNeverlandResponseDTO {
 
     }
 
+    public static Result create(boolean isSuccess, String message) {
+        return Result.create(GenericNeverlandEmptyResponseDTO.class,isSuccess,message);
+    }
+
     @Getter
     static public class Header{
         private String type = "fail";

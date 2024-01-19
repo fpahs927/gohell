@@ -15,6 +15,5 @@ public class GetCheckValidationResponseDTO extends GenericNeverlandResponseDTO.R
     private Object request;
     private String isTest = "true";
 
-    private List<CheckEmailContainsDTO> CheckEmailContainsDto;
 }
 

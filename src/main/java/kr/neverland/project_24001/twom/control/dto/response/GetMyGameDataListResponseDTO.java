@@ -1,5 +1,6 @@
 package kr.neverland.project_24001.twom.control.dto.response;
 
+import kr.neverland.project_24001.twom.control.dto.common.NeverLandPageInformationForListDTO;
 import kr.neverland.project_24001.twom.control.dto.response.obj.MyGameDataInfoDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,5 +15,8 @@ public class GetMyGameDataListResponseDTO extends GenericNeverlandResponseDTO.Re
     @Setter
     private Object request;
     private String isTest = "true";
-    List<MyGameDataInfoDTO> myGameDataInfoDTO;
+
+
+    private NeverLandPageInformationForListDTO pageInfo;
+    private List<MyGameDataInfoDTO> myGameDataInfoDTO;
 }

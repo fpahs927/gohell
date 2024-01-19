@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class AccountCreateRequestDTO {
     private String userName;
     private String nickName;
-    private String eMail;
+    private String email;
     private String password;
     private LocalDateTime agreementDate001;
     private LocalDateTime agreementDate002;

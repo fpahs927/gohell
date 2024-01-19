@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 
-public class Session  extends AbstractEntity {
+public class Session extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sessionId;

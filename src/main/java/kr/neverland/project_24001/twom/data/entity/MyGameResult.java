@@ -17,7 +17,11 @@ public class MyGameResult  extends AbstractEntity {
 //    private long userId;
 
     private String resultType;
-    private String memo;
+
+    private String scoreHomeTeam;
+    private String scoreArrayTeam;
+    private String gameResult;//당락
+
     private String details;
     private LocalDateTime reservedDate;
     private boolean useReservedDate;

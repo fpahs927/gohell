@@ -4,4 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class MyNotificationDataDTO {
+    private String notificationTarget;
+    private long registedNotificationDate;
+    private String notificationMessageType;
+    private String notificationMessageDetails;
+    private String notificationAction;
 }

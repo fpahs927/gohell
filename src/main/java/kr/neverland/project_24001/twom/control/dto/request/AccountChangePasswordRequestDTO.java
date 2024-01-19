@@ -8,13 +8,10 @@ import lombok.Setter;
 @Getter
 public class AccountChangePasswordRequestDTO {
     private NeverLandLoginInfoDTO user;
-
-
     private String email;
 
     private String prePassword;
-
     private String type; //0.로그인 상태에서 변경, 1.email로 변경, 2.기존 패스워드로 변경
-
     private String newPassword;
+
 }

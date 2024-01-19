@@ -1,6 +1,6 @@
 package kr.neverland.project_24001.twom.control.dto.response;
 
-import kr.neverland.project_24001.twom.control.dto.response.obj.MyAllInfoDTO;
+import kr.neverland.project_24001.twom.control.dto.response.obj.MyAccountInfoDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,5 +14,9 @@ public class GetMyAccountInfoResponseDTO extends GenericNeverlandResponseDTO.Res
     @Setter
     private Object request;
     private String isTest = "true";
-    private List<MyAllInfoDTO> myAllInfoDTOList;
+    private MyAccountInfoDTO myAccountInfo;
+
+
+
+
 }

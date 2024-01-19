@@ -20,10 +20,9 @@ public class User extends AbstractEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
-
     private String userName;
+    private String email;
     private String nickName;
-    private String eMail;
     private String password;
     private LocalDateTime agreementDate001;
     private LocalDateTime agreementDate002;

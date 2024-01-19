@@ -16,5 +16,5 @@ public class GetBoardContentDetailResponseDTO extends GenericNeverlandResponseDT
     private Object request;
     private String isTest = "true";
 
-    private List<BoardContentDetailDTO> boardContentDetailList;
+    private BoardContentDetailDTO boardContentDetail;
 }

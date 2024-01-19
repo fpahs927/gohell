@@ -17,8 +17,10 @@ import java.util.ArrayList;
 public class NotificationController {
 //외부 인터페이스 사용
     @GetMapping("/my_notification_data")
-    public GenericNeverlandResponseDTO getMyNotificationData(@RequestParam Long userId
-                                                        , @RequestParam String sessionCode){
+    public GenericNeverlandResponseDTO getMyNotificationData(
+                                                @RequestParam Long userId
+                                                        ,@RequestParam String sessionCode
+                                                            ,@RequestParam Long lastReceivedNotificationDate){
         ArrayList<MyNotificationDataDTO> infoList=new ArrayList<MyNotificationDataDTO>(0);
 
         return GetMyNotificationListResponseDTO.create(GetMyNotificationListResponseDTO.class,true,"")
