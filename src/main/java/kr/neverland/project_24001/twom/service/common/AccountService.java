@@ -56,13 +56,14 @@ public class AccountService {
 
         System.out.print("얘는 세션코드인데 뭐가 나오는지 한번 보자" + sessionCode);
         Optional<User> findUserId = userRepository.findById(userId);
+
         findUserId.ifPresent(user -> {
             if (prevPassword.equals(user.getPassword())) {
                 user.setPassword(newPassword);
                 userRepository.save(user);
                 System.out.print("되는지만 보자");
             } else {
-                System.out.print("좆됌");
+                System.out.print("안된당");
             }
         });
     }
@@ -77,40 +78,29 @@ public class AccountService {
         //애초에 session 안에는 아무값도 없는데 뭘 넣어서 만들어야하는거지?
 
         NeverLandLoginInfoDTO newNeverLandLoginInfoDTO = new NeverLandLoginInfoDTO();
-
         matchingUser.ifPresent(finduser -> {
             matchingPassword.filter(findPassword -> finduser.getPassword().equals(password))
                     .ifPresent(findPassword -> {
                         Long userId= finduser.getUserId();
                         newNeverLandLoginInfoDTO.setUserId(userId);
 
-                        String sessionCode = newNeverLandLoginInfoDTO.getSessionCode();
+                        String sessionCode = Session.createSessionCode(userId);
                         newNeverLandLoginInfoDTO.setSessionCode(sessionCode);
 
                         System.out.println("지금은 userId는?" + userId + "sessionCode는?" + sessionCode);
 
                         sessionRepository.findById(userId);
-//                        newNeverLandLoginInfoDTO.setSessionCode(newNeverLandLoginInfoDTO.getSessionCode());
-
 
                         ////////////////////////////////////////////////////////////////////////
-
 
 
                         Session testSession = new Session();
                         System.out.println("테스트2" + newNeverLandLoginInfoDTO.setSessionCode(testSession.getSessionCode()));
                         testSession.setUser(finduser);
                         testSession.setSessionCode(sessionCode);
-                        testSession.setSessionCode(newNeverLandLoginInfoDTO.getSessionCode());
+                      //  testSession.setSessionCode(newNeverLandLoginInfoDTO.getSessionCode());
                         sessionRepository.save(testSession);
                         /////////////////////////////////////////////////////////////////////////////
-
-                        newNeverLandLoginInfoDTO.setSessionCode(testSession.getSessionCode());
-                        newNeverLandLoginInfoDTO.setUserId(testSession.getSessionId());
-                        sessionRepository.save(testSession);
-
-                        ///////////////////////////////////////////////////////////////////////////
-
                         sessionRepository.findById(userId).ifPresentOrElse(
                                 existsession -> {
                                     newNeverLandLoginInfoDTO.setSessionCode(testSession.getSessionCode());

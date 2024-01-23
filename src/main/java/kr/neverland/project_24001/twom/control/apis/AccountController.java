@@ -25,13 +25,13 @@ public class AccountController {
 
     @PostMapping("/change_password")
     public GenericNeverlandResponseDTO changePassword(@RequestBody AccountChangePasswordRequestDTO password){
-
         //로직이 틀렸다.
         accountService.changePassword(password.getUser().getUserId(),
                                                 password.getUser().getSessionCode()
                                                     ,password.getPrePassword(), password.getNewPassword());
         return GenericNeverlandResponseDTO.test("작업 중", password.getPrePassword());
     }
+
     @GetMapping("/check_email_contains")  //이메일 중복 여부, 이메일만 지금 값이 null값으로 들어감
     public GenericNeverlandResponseDTO checkEmailContains(@RequestParam String Email){
         try {

@@ -10,4 +10,5 @@ import lombok.experimental.Accessors;
 public class NeverLandLoginInfoDTO {
     private Long userId;
     private String sessionCode;
+
 }
