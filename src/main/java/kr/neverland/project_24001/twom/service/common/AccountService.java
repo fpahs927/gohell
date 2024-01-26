@@ -53,65 +53,50 @@ public class AccountService {
         //userId와 sessioncode를 검증
         //특정 user를 userId로 찾음
         //찾은 다음에 변경
-
-        System.out.print("얘는 세션코드인데 뭐가 나오는지 한번 보자" + sessionCode);
         Optional<User> findUserId = userRepository.findById(userId);
+        Optional<Session> findCode = sessionRepository.findBySessionCode(sessionCode);
 
         findUserId.ifPresent(user -> {
-            if (prevPassword.equals(user.getPassword())) {
-                user.setPassword(newPassword);
-                userRepository.save(user);
-                System.out.print("되는지만 보자");
-            } else {
-                System.out.print("안된당");
-            }
-        });
+                if (prevPassword.equals(user.getPassword())) {
+                    user.setPassword(newPassword);
+                    userRepository.save(user);
+                    System.out.print("되는지만 보자");
+                } else {
+                    System.out.print("안된당");
+                }
+            });
     }
 
     public NeverLandLoginInfoDTO login(String email, String password) { //로그인 얘부터하고 changePassword 해라
         //login 구현할 때 세션코드가 만들어지고
+//        Optional<User> matchingUser = userRepository.findByEmail(email);
+//        Optional<User> matchingPassword = userRepository.findByPassword(password);
 
-        Optional<User> matchingUser = userRepository.findByEmail(email);
-        Optional<User> matchingPassword = userRepository.findByPassword(password);
+        //db에 한번만 접근할 수 있게끔
+        Optional<User> userOptional = userRepository.findByEmailAndPassword(email, password);
 
-        //Long userId; //email과 password로 찾아야됨 (해결)
-        //애초에 session 안에는 아무값도 없는데 뭘 넣어서 만들어야하는거지?
 
         NeverLandLoginInfoDTO newNeverLandLoginInfoDTO = new NeverLandLoginInfoDTO();
-        matchingUser.ifPresent(finduser -> {
-            matchingPassword.filter(findPassword -> finduser.getPassword().equals(password))
+        userOptional.ifPresent(finduser -> {
+            userOptional.filter(findPassword -> finduser.getPassword().equals(password))
                     .ifPresent(findPassword -> {
                         Long userId= finduser.getUserId();
                         newNeverLandLoginInfoDTO.setUserId(userId);
 
+                        Session session = new Session();
+
                         String sessionCode = Session.createSessionCode(userId);
                         newNeverLandLoginInfoDTO.setSessionCode(sessionCode);
-
                         System.out.println("지금은 userId는?" + userId + "sessionCode는?" + sessionCode);
 
-                        sessionRepository.findById(userId);
 
+                        //session.setSessionId(userId);
+                        session.setSessionCode(sessionCode);
+                        sessionRepository.save(session);
+                    });
+        });
                         ////////////////////////////////////////////////////////////////////////
 
-
-                        Session testSession = new Session();
-                        System.out.println("테스트2" + newNeverLandLoginInfoDTO.setSessionCode(testSession.getSessionCode()));
-                        testSession.setUser(finduser);
-                        testSession.setSessionCode(sessionCode);
-                      //  testSession.setSessionCode(newNeverLandLoginInfoDTO.getSessionCode());
-                        sessionRepository.save(testSession);
-                        /////////////////////////////////////////////////////////////////////////////
-                        sessionRepository.findById(userId).ifPresentOrElse(
-                                existsession -> {
-                                    newNeverLandLoginInfoDTO.setSessionCode(testSession.getSessionCode());
-                                    newNeverLandLoginInfoDTO.setUserId(testSession.getSessionId());
-                                    sessionRepository.save(testSession);
-                                },
-                                ()->{ //없다
-
-                                }
-                        );
-//                        sessionRepository.findByUserId(userId);
 //                                .ifPresentOrElse(
 //                                //저장된 게 있다면
 //                                        session -> {
@@ -126,14 +111,6 @@ public class AccountService {
 //                                            System.out.print("새로운 새션을 만들어 저장했습니다");
 //                                        }
 //                                );
-
-                    });
-        });
-
-
-//        newNeverLandLoginInfoDTO.setUserId();
-//        newNeverLandLoginInfoDTO.setSessionCode();
-//        userRepository.save();
         return newNeverLandLoginInfoDTO;
     }
 
