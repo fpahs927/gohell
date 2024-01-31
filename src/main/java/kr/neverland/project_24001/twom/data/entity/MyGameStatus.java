@@ -17,6 +17,12 @@ public class MyGameStatus  extends AbstractEntity {
 
 
     private String status;
+    private String charge; //처리담당
+
+
+    @ManyToOne
+    @JoinColumn(name = "store_id_of_mygamestatus")
+    private Store targetStore;
 
 
     @ManyToOne

@@ -22,4 +22,8 @@ public class Session extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "user_id_of_session")
     private User user;
+
+    public static String createSessionCode(Long userId) {
+        return userId.toString().hashCode()+":"+(System.currentTimeMillis()+"_").hashCode();
+    }
 }

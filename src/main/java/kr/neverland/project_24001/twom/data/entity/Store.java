@@ -24,6 +24,6 @@ public class Store extends AbstractEntity {
     private String phoneNumber;
 
     @OneToMany
-    @JoinColumn(name="store_id_of_mygameresult")
-    List<MyGameResult> myGameResultList;
+    @JoinColumn(name="store_id_of_mygamestatus")
+    List<MyGameStatus> myGameStatusList;  //MyGameStatus로 바꿔야하는지 물어보기
 }

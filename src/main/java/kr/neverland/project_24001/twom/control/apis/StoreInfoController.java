@@ -12,6 +12,19 @@ import java.util.ArrayList;
 @RequestMapping("/neverland/apis/mbd/storeinfo")
 @RestController
 public class StoreInfoController {
+
+    //StoreService
+//    @PostMapping("/add_store")
+//    public GenericNeverlandResponseDTO addStore(@RequestBody StoreInfoAddRequestDTO p1){
+//        return GenericNeverlandResponseDTO.Unimplemented;
+//    }
+//    @GetMapping("/store_list")
+//    public GenericNeverlandResponseDTO getStoreList(@RequestParam Long userId){
+//        ArrayList<StoreInfoDTO> infoList=new ArrayList<StoreInfoDTO>(0);
+//
+//        return GetStoreListResponseDTO.create(GetStoreListResponseDTO.class,true,"")
+//                .setMyStoreList(infoList).toResponseDTO();
+//    }
     @PostMapping("/add_my_store")
     public GenericNeverlandResponseDTO addMyStore(@RequestBody StoreInfoAddMyRequestDTO p1){
         return GenericNeverlandResponseDTO.Unimplemented;

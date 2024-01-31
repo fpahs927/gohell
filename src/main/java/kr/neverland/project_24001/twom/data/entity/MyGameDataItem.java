@@ -10,15 +10,24 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-public class MyGameDataItem  extends AbstractEntity {
+public class MyGameDataItem//  extends AbstractEntity
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long myGameDataItemId;
 
-    private String gameAllotmentId;
+//    private String gameAllotmentId;
     private String gameAllotmentSelection;
+
 
     @ManyToOne
     @JoinColumn(name = "mygamedata_id_of_mygamedataitem")
     private MyGameData parentGameData;
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "gameallot_id_of_mygamedataitem")
+    private GameAllotInfo gameAllotmentInfo;
 }

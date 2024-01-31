@@ -1,8 +1,10 @@
 package kr.neverland.project_24001.twom.control.dto.response.obj;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class MyStoreInfoDTO {
 
     private String status;

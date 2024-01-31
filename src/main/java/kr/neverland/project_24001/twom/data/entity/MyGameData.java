@@ -29,10 +29,6 @@ public class MyGameData extends AbstractEntity {
     List<MyGameDataItem> itemList;
 
     @OneToMany
-    @JoinColumn(name = "mygamedata_id_of_mygameresult")
-    List<MyGameResult> resultList;
-
-    @OneToMany
     @JoinColumn(name = "mygamedata_id_of_mygamestatus")
     List<MyGameStatus> statusList;
 }

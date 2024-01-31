@@ -19,19 +19,27 @@ import java.util.List;
 @RequestMapping("/neverland/apis/mbd/account")
 @RestController
 public class AccountController {
-
+    //password에 암호화 걸것, mystorelist 확인하기, 회원탈퇴
     @Autowired
     private AccountService accountService;
 
     @PostMapping("/change_password")
     public GenericNeverlandResponseDTO changePassword(@RequestBody AccountChangePasswordRequestDTO password){
-
         //로직이 틀렸다.
-        accountService.changePassword(password.getUser().getUserId(),
+        boolean isSuccess = accountService.changePassword(password.getUser().getUserId(),
                                                 password.getUser().getSessionCode()
-                                                    ,password.getPrePassword(), password.getNewPassword());
-        return GenericNeverlandResponseDTO.test("작업 중", password.getPrePassword());
+                                                      ,password.getPrePassword(), password.getNewPassword());
+
+        if(isSuccess){
+            return GenericNeverlandResponseDTO
+                    .create(true,"변경 성공")
+                    .toResponseDTO();
+        }
+        return GenericNeverlandResponseDTO
+                .create(false,"변경 실패")
+                .toResponseDTO();
     }
+
     @GetMapping("/check_email_contains")  //이메일 중복 여부, 이메일만 지금 값이 null값으로 들어감
     public GenericNeverlandResponseDTO checkEmailContains(@RequestParam String Email){
         try {
@@ -51,26 +59,30 @@ public class AccountController {
             System.out.print("닉네임 정보" + createUser.getNickName() + "email" + createUser.getEmail());
         } catch (Exception e) {
             return GenericNeverlandResponseDTO
-                        .create(false,e.getMessage())
-                                    .toResponseDTO();
+                    .create(false,e.getMessage())
+                    .toResponseDTO();
         }
 
         return GenericNeverlandResponseDTO
-                        .create(true,"성공적으로 계정이 생성되었습니다.")
-                            .toResponseDTO();
+                .create(true,"성공적으로 계정이 생성되었습니다.")
+                .toResponseDTO();
 //        System.out.print("닉네임 정보" + createUser.getNickName() + "email" + createUser.getEmail());
     }
 
-    @DeleteMapping("/disposeAccount/{userid}/{sessionCode}")
-    public GenericNeverlandResponseDTO disposeAccount(@PathVariable Long userid, @PathVariable String sessionCode){
-        return GenericNeverlandResponseDTO.test("작업 중",userid,sessionCode);
+    @DeleteMapping("/disposeAccount/{userId}/{sessionCode}")
+    public GenericNeverlandResponseDTO disposeAccount(@PathVariable Long userId, @PathVariable String sessionCode){
+        return GenericNeverlandResponseDTO.test("작업 중",userId,sessionCode);
     }
 
     @PostMapping("/login_account")   //로그인
     public GenericNeverlandResponseDTO loginAccount(@RequestBody AccountLoginRequestDTO user){
         NeverLandLoginInfoDTO loginInfoDTO;
-        loginInfoDTO= accountService.login(user.getEmail(),user.getPassword());
+        loginInfoDTO= accountService.login(user.getEmail(),user.getPassword(),30);
 
+        if(loginInfoDTO==null){
+            return GenericNeverlandSessionResponseDTO
+                    .create(GenericNeverlandSessionResponseDTO.class, false,"로그인 실패[테스트]").toResponseDTO();
+        }
         return GenericNeverlandSessionResponseDTO
                 .create(GenericNeverlandSessionResponseDTO.class, true,"로그인 성공[테스트]")
                 .setUser(loginInfoDTO
@@ -80,11 +92,15 @@ public class AccountController {
                 ).toResponseDTO();
     }
 
-    @GetMapping("/my_info")   //세션코드 유무를 몰라 sessionCode를 알아야함
-    public GenericNeverlandResponseDTO getMyInfo(@RequestParam Long userid,@RequestParam String sessionCode){
-        MyAccountInfoDTO myAllInfoList = new MyAccountInfoDTO();
+    @GetMapping("/my_info")
+    public GenericNeverlandResponseDTO getMyInfo(@RequestParam Long userId,@RequestParam String sessionCode) {
+        MyAccountInfoDTO myAccountInfoDTO = accountService.getSession(userId, sessionCode, true, 15);
 
-        return GetMyAccountInfoResponseDTO.create(GetMyAccountInfoResponseDTO.class,true,"")
-                .setMyAccountInfo(myAllInfoList).toResponseDTO();
+        if(myAccountInfoDTO==null){
+            return GenericNeverlandSessionResponseDTO
+                    .create(GenericNeverlandSessionResponseDTO.class, false,"개인정보를 가져오는데 실패하였습니다.[테스트]").toResponseDTO();
+        }
+        return GetMyAccountInfoResponseDTO.create(GetMyAccountInfoResponseDTO.class, true, "개인정보를 가져왔습니다.")
+                .setMyAccountInfo(myAccountInfoDTO).toResponseDTO();
     }
 }

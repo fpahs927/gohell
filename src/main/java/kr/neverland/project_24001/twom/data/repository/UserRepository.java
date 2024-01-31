@@ -12,5 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findByEmail(String email);
+    Optional<User> findByEmailAndDeleteDateIsNull(String email);
+    List<User> findByPasswordAndDeleteDateIsNull(String password);
+    User findFirstByEmailAndPasswordAndDeleteDateIsNullOrderByCreateDateDesc(String email, String password);
 }

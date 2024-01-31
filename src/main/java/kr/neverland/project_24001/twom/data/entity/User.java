@@ -24,6 +24,10 @@ public class User extends AbstractEntity
     private String email;
     private String nickName;
     private String password;
+
+    private String userLevel;
+    private String phoneNumber;
+
     private LocalDateTime agreementDate001;
     private LocalDateTime agreementDate002;
     private LocalDateTime agreementDate003;
@@ -37,8 +41,6 @@ public class User extends AbstractEntity
     @OneToMany
     @JoinColumn(name="user_id_of_mygamedata")
     List<MyGameData> myGameDataList;
-
-
 
     @OneToMany
     @JoinColumn(name="user_id_of_board")
