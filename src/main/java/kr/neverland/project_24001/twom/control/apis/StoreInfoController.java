@@ -5,6 +5,9 @@ import kr.neverland.project_24001.twom.control.dto.request.StoreInfoSetDefaultRe
 import kr.neverland.project_24001.twom.control.dto.response.GenericNeverlandResponseDTO;
 import kr.neverland.project_24001.twom.control.dto.response.GetMyStoreListResponseDTO;
 import kr.neverland.project_24001.twom.control.dto.response.obj.MyStoreInfoDTO;
+import kr.neverland.project_24001.twom.data.entity.Store;
+import kr.neverland.project_24001.twom.service.common.StoreInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,7 +15,8 @@ import java.util.ArrayList;
 @RequestMapping("/neverland/apis/mbd/storeinfo")
 @RestController
 public class StoreInfoController {
-
+    @Autowired
+    private StoreInfoService storeInfoService;
     //StoreService
 //    @PostMapping("/add_store")
 //    public GenericNeverlandResponseDTO addStore(@RequestBody StoreInfoAddRequestDTO p1){
@@ -26,7 +30,8 @@ public class StoreInfoController {
 //                .setMyStoreList(infoList).toResponseDTO();
 //    }
     @PostMapping("/add_my_store")
-    public GenericNeverlandResponseDTO addMyStore(@RequestBody StoreInfoAddMyRequestDTO p1){
+    public GenericNeverlandResponseDTO addMyStore(@RequestBody StoreInfoAddMyRequestDTO storeDTO){
+        storeInfoService.saveStore(storeDTO);
         return GenericNeverlandResponseDTO.Unimplemented;
     }
     @GetMapping("/my_store_list")

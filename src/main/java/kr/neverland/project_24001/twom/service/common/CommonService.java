@@ -62,23 +62,26 @@ public class CommonService {
            //categoryName = searchCondition
         List<MyBoard> myBoardList = null;
         User user = new User();
+
         if (searchCondition.startsWith("subscriptionTerms:")) {
             //전체를 다주면됨
-           // myBoard.setCategoryName(searchCondition);
-            myBoardList = myboardRepository.findByCategoryName(searchCondition);
+            // myBoard.setCategoryName(searchCondition);
+            myBoardList = myboardRepository.findByCategoryName("subscriptionTerms:");
         }
         if (searchCondition.contains("announcement")) {//categoryName = announcement
-            myBoardList=myboardRepository.findByCategoryName(searchCondition);
+            // myBoard.setCategoryName(searchCondition);
+            myBoardList = myboardRepository.findByCategoryName("announcement");
             //전체를 다주면됨
         }
         if (searchCondition.contains("question-and-answer")) {//categoryName = question-and-answer
-            myBoardList =myboardRepository.findByCategoryName(searchCondition); //question에 해당하는 데이터들만 조회하는건지
-                     //findAll해서 조회해야하는건지? 물어보기
+            myBoardList =myboardRepository.findByCategoryName("question-and-answer");
+                     //question에 해당하는 데이터들만 조회하는건지
+                        //question에 해당하는 db라면 어떤 db인지 여쭈어보기
             //전체를 다주면됨
         }
         if (searchCondition.contains("private-question")) {//categoryName = private-question
             if(userLevel.contains("admin")){ //userLevel이 admin인 경우 전체 조회
-                myBoardList =myboardRepository.findByCategoryName(searchCondition);
+                myBoardList =myboardRepository.findByCategoryName("private-question");
             }else{ //userLevel 이 admin이 아닌경우 자기것만  (userId)를 기준으로 조회
                 myboardRepository.findByUserIdAndCategoryName(userId, searchCondition);
             }

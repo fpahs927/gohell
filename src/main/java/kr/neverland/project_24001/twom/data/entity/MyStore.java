@@ -5,8 +5,6 @@ import kr.neverland.project_24001.twom.data.entity.base.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Setter
 @Getter
 @Entity
